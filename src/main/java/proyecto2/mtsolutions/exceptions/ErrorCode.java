@@ -1,0 +1,15 @@
+package proyecto2.mtsolutions.exceptions;
+
+public enum ErrorCode {
+    INTERNAL_ERROR,
+    DATABASE_ERROR,
+    CUSTOM_ERROR,
+    NO_DATA_FOUND,
+    UNAVAILABLE,
+    UNAUTHORIZED,
+    FORBIDDEN,
+    NO_BODY_DATA,
+    PARAMETROS_FALTANTES,
+    ERROR_GENERAR_USUARIO,
+    USUARIO_EXISTENTE
+}

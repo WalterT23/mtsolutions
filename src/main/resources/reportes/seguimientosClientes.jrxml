@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="seguimiento" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="f891a8ed-c57b-449a-b547-9ceeffd9f5dd">
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+    <property name="net.sf.jasperreports.print.create.bookmarks" value="false"/>
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
+    <field name="fechaCumple" class="java.util.Date">
+        <fieldDescription><![CDATA[fechaCumple]]></fieldDescription>
+    </field>
+    <field name="fechaSegFin" class="java.util.Date">
+        <fieldDescription><![CDATA[fechaSegFin]]></fieldDescription>
+    </field>
+    <field name="ciudad" class="java.lang.String">
+        <fieldDescription><![CDATA[ciudad]]></fieldDescription>
+    </field>
+    <field name="nroCedula" class="java.lang.String">
+        <fieldDescription><![CDATA[nroCedula]]></fieldDescription>
+    </field>
+    <field name="fechaCreacion" class="java.util.Date">
+        <fieldDescription><![CDATA[fechaCreacion]]></fieldDescription>
+    </field>
+    <field name="fechaSegIni" class="java.util.Date">
+        <fieldDescription><![CDATA[fechaSegIni]]></fieldDescription>
+    </field>
+    <field name="nombreCompleto" class="java.lang.String">
+        <fieldDescription><![CDATA[nombreCompleto]]></fieldDescription>
+    </field>
+    <field name="kyclevel" class="java.lang.String">
+        <fieldDescription><![CDATA[kyclevel]]></fieldDescription>
+    </field>
+    <field name="nacionalidad" class="java.lang.String">
+        <fieldDescription><![CDATA[nacionalidad]]></fieldDescription>
+    </field>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="61" splitType="Stretch">
+            <image scaleImage="RealHeight" hAlign="Center" vAlign="Middle">
+                <reportElement x="0" y="18" width="90" height="40" uuid="e80ecf76-384e-49f1-8a20-a260336bc464"/>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <imageExpression><![CDATA["images/logo-wally.png"]]></imageExpression>
+            </image>
+            <staticText>
+                <reportElement x="90" y="18" width="460" height="40" uuid="3cf99f88-2ff4-4468-87b1-d5353171557b"/>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Ubuntu" size="15" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Seguimiento de Clientes]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="0" width="550" height="18" uuid="b8457d18-9aac-4fde-8705-55668861bf3f"/>
+                <text><![CDATA[]]></text>
+            </staticText>
+        </band>
+    </title>
+    <columnHeader>
+        <band height="25" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="0" width="90" height="20" uuid="efdac6dc-0c7f-4418-aae8-f0200596f0df">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Ubuntu" size="9"/>
+                </textElement>
+                <text><![CDATA[Nro. Cedula]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="90" y="0" width="110" height="20" uuid="4330318c-cba0-4ae4-92c3-ab9800e5bc85"/>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Ubuntu" size="9"/>
+                </textElement>
+                <text><![CDATA[Nombre Completo]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="200" y="0" width="70" height="20" uuid="d69a3012-ecf3-4011-9acd-7847784b8512"/>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Ubuntu" size="9"/>
+                </textElement>
+                <text><![CDATA[Nacionalidad]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="270" y="0" width="60" height="20" uuid="5fbb71a4-f30c-4d53-8565-81bef138b4b9"/>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Ubuntu" size="9"/>
+                </textElement>
+                <text><![CDATA[Ciudad]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="330" y="0" width="60" height="20" uuid="b3ad56be-e615-42cd-87fe-b1999c773f7a"/>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Ubuntu" size="9"/>
+                </textElement>
+                <text><![CDATA[F. Creacion]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="390" y="0" width="60" height="20" uuid="dec2c0ee-4859-4647-aae5-f00c110b60d4"/>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Ubuntu" size="9"/>
+                </textElement>
+                <text><![CDATA[F. Seg. Inicio]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="450" y="0" width="60" height="20" uuid="5a4a700c-b27e-4b7c-bc0f-0f6ea594b713"/>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Ubuntu" size="9"/>
+                </textElement>
+                <text><![CDATA[F. Seg. Inicio]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="510" y="0" width="40" height="20" uuid="f3d7557a-2450-414e-b06e-ad653fa6ac8e"/>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Ubuntu" size="9"/>
+                </textElement>
+                <text><![CDATA[KYC]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="20" splitType="Stretch">
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+                <reportElement x="0" y="0" width="90" height="20" isPrintWhenDetailOverflows="true" uuid="857d895f-0768-450a-8b92-565ba2dc5e8c">
+                    <property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                </reportElement>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+                    <font fontName="Ubuntu" size="9"/>
+                    <paragraph leftIndent="0" rightIndent="0"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{nroCedula}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+                <reportElement x="90" y="0" width="110" height="20" isPrintWhenDetailOverflows="true" uuid="d02c2c7d-e64e-457b-bbf4-e017b48a83b6">
+                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                </reportElement>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+                    <font fontName="Ubuntu" size="9"/>
+                    <paragraph lineSpacingSize="1.0" leftIndent="10" rightIndent="0"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{nombreCompleto}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+                <reportElement x="200" y="0" width="70" height="20" isPrintWhenDetailOverflows="true" uuid="86624b96-279a-4afc-81df-2303c321a5b9">
+                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                </reportElement>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+                    <font fontName="Ubuntu" size="9"/>
+                    <paragraph lineSpacingSize="1.0" leftIndent="10" rightIndent="0"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{nacionalidad}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+                <reportElement x="270" y="0" width="60" height="20" isPrintWhenDetailOverflows="true" uuid="bc63b18d-9084-40cc-b056-1633572f5294"/>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+                    <font fontName="Ubuntu" size="9"/>
+                    <paragraph leftIndent="0" rightIndent="0"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{ciudad}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+                <reportElement x="330" y="0" width="60" height="20" isPrintWhenDetailOverflows="true" uuid="9d07036d-6140-41bc-9a42-e7f28e9866e6"/>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+                    <font fontName="Ubuntu" size="9"/>
+                    <paragraph leftIndent="0" rightIndent="0"/>
+                </textElement>
+                <textFieldExpression><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($F{fechaCreacion})]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+                <reportElement x="390" y="0" width="60" height="20" isPrintWhenDetailOverflows="true" uuid="7430c5d1-4d67-4c07-b612-b6a7ecb5bffd"/>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+                    <font fontName="Ubuntu" size="9"/>
+                    <paragraph leftIndent="0" rightIndent="0"/>
+                </textElement>
+                <textFieldExpression><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($F{fechaSegIni})]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+                <reportElement x="450" y="0" width="60" height="20" isPrintWhenDetailOverflows="true" uuid="dbd5ffee-6dd5-45cf-a4c7-75ea4a6ed27b"/>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+                    <font fontName="Ubuntu" size="9"/>
+                    <paragraph leftIndent="0" rightIndent="0"/>
+                </textElement>
+                <textFieldExpression><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($F{fechaSegFin})]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+                <reportElement x="510" y="0" width="40" height="20" isPrintWhenDetailOverflows="true" uuid="faddc100-f864-41c6-9475-b7d5e66f8550">
+                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                </reportElement>
+                <box>
+                    <topPen lineWidth="0.5"/>
+                    <leftPen lineWidth="0.5"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+                    <font fontName="Ubuntu" size="9"/>
+                    <paragraph lineSpacingSize="1.0" leftIndent="10" rightIndent="0"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{kyclevel}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.TokenDAO">
+
+	<insert id="insertToken">
+		<selectKey order="AFTER" keyProperty="id" resultType="int">
+			SELECT currval('seg_core_tokens_id_seq')
+		</selectKey>
+
+		INSERT INTO seg_core_tokens
+		(uuid, expiration, issued_at, remote_ip, token_type, user_agent, username, security_profile_id, app_id, valid)
+		VALUES
+		(#{uuid}, #{expiration}, #{issuedAt}, #{remoteIp}, #{tokenType}, #{userAgent}, #{username}, #{securityProfileId}, #{appId}, #{valid})
+	</insert>
+	
+	<update id="updateToken" parameterType="TokenDTO">
+        update seg_core_tokens
+        SET uuid = #{uuid}
+        where username = #{username}
+        and expiration >= now()
+        and valid is true
+    </update>
+    
+    <delete id="deleteToken" parameterType="String">
+        DELETE FROM seg_core_tokens
+        WHERE uuid=#{uuid}
+    </delete>
+    
+    <delete id="deleteTokenByUsername" parameterType="String">
+        DELETE FROM seg_core_tokens
+        WHERE username=#{username}
+        and expiration >= now()
+        and valid is true
+    </delete>
+	
+	 <select id="tokenByValue" resultType="TokenDTO" parameterType="String">
+        select id, uuid, value, username, invalid
+        from seg_core_tokens
+        where uuid = #{uuid}
+    </select>
+    
+    <select id="tokenByUsername" resultType="TokenDTO" parameterType="String">
+        select id, uuid, expiration, issued_at, remote_ip, token_type, user_agent, username, security_profile_id, app_id, valid
+        from seg_core_tokens
+        where username = #{username}
+        and expiration >= now()
+        and valid is true
+    </select>
+
+</mapper>

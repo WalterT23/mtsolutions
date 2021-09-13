@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.UsuarioDAO">
+
+    <resultMap id="rolMap" type="RolDTO">
+        <id property="id" column="idRol" javaType="String"/>
+        <result property="nombre" column="nombreRol" javaType="String"/>
+        <result property="descripcion" column="descripcionRol" javaType="String"/>
+        <result property="activo" column="activoRol" javaType="Boolean"/>
+        <collection property="perfiles" ofType="PerfilDTO">
+            <id property="id" column="idPerfil" javaType="String"/>
+            <result property="nombre" column="nombrePerfil" javaType="String"/>
+            <result property="descripcion" column="descripcionPerfil" javaType="String"/>
+            <result property="activo" column="activoPerfil" javaType="Boolean"/>
+            <collection property="funcionalidades" ofType="FuncionalidadDTO">
+                <id property="id" column="idFunc" javaType="String"/>
+                <result property="nombre" column="descripcionFunc" javaType="String"/>
+                <result property="descripcion" column="nombreFunc" javaType="String"/>
+                <result property="activo" column="activoFunc" javaType="Boolean"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="userByName" parameterType="Map" resultType="UsuarioDTO">
+        select su.cod id,
+            su.nombre nombre,
+            su.apellido apellido,
+            su.nro_documento documento,
+            su.telefono telefono,
+            su.correo email,
+            su.estado estado,
+            su."password"
+        from seg_usuario su
+        where su.cod = #{username}
+    </select>
+
+    <select id="rolesByUserId" parameterType="Map" resultMap="rolMap">
+        select sr.cod idRol,
+            sr.nombre nombreRol,
+            sr.descripcion descripcionRol,
+            sr.activo activoRol,
+            sp.cod idPerfil,
+            sp.nombre nombrePerfil,
+            sp.descripcion descripcionPerfil,
+            sp.activo activoPerfil,
+            sf.cod idFunc,
+            sf.descripcion descripcionFunc,
+            sf.nombre nombreFunc,
+            sf.activo activoFunc
+        from seg_usuario su
+        join seg_rol_usuario sru on su.cod = sru.cod_user
+        join seg_rol sr on sr.cod = sru.cod_rol and sr.activo is true
+        join seg_rol_permiso srp on sr.cod = srp.cod
+        join seg_permiso sp on sp.cod = srp.cod_permiso and sp.activo is true
+        join seg_funcionalidad_permiso sfp on sfp.cod_permiso = sp.cod
+        join seg_funcionalidad sf on sf.cod = sfp.cod_func and sf.activo is true
+        where su.cod = #{username}
+    </select>
+    <select id="getUsuariosList" parameterType="Map" resultType="UsuarioDTO">
+        select su.cod id,
+            su.nombre nombre,
+            su.apellido apellido,
+            su.nro_documento documento,
+            su.telefono telefono,
+            su.correo email,
+            su.estado estado,
+            su."password"
+        from seg_usuario su
+        order by su.fecha_creacion desc limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getUsuariosListCount"  resultType="BigDecimal">
+        select count(*)
+        from
+            seg_usuario u;
+    </select>
+    <select id="buscarUsuariosList" parameterType="Map" resultType="UsuarioDTO">
+        <bind name="fil" value="'%' + filtro.valor + '%'" />
+        select su.cod id,
+        su.nombre nombre,
+        su.apellido apellido,
+        su.nro_documento documento,
+        su.telefono telefono,
+        su.correo email,
+        su.estado estado
+        from seg_usuario su
+        where lower(su.nro_documento) like lower(#{fil})
+        or lower(su.nombre) like  lower(#{fil})
+        or lower(su.apellido) like lower(#{fil})
+        or lower(concat(su.nombre,' ',su.apellido)) like lower(#{fil})
+        order by su.fecha_creacion desc limit #{cantidad} offset #{offset}
+    </select>
+    <select id="buscarUsuariosListCount"  parameterType="Map" resultType="BigDecimal">
+        <bind name="fil" value="'%' + filtro.valor + '%'" />
+        select count(*)
+        from
+        seg_usuario su
+        where lower(su.nro_documento) like lower(#{fil})
+        or lower(su.nombre) like  lower(#{fil})
+        or lower(su.apellido) like lower(#{fil})
+        or lower(concat(su.nombre,' ',su.apellido)) like lower(#{fil})
+    </select>
+
+    <insert id="crearUsuario" parameterType="Map">
+        INSERT INTO public.seg_usuario
+        (cod, nombre, apellido, nro_documento, direccion, estado, telefono, "password",
+        fecha_nacimiento, reset_password, fecha_creacion, fecha_modificacion, usuario_creacion,
+        historial_password, correo, datos_adicionales)
+        VALUES
+        (#{dto.id}, #{dto.nombre}, #{dto.apellido}, #{dto.documento}, #{dto.direccion}, #{dto.estado}, #{dto.telefono}, #{pass},
+         now(), true, now(), null, #{user}, null, #{dto.email}, null)
+    </insert>
+
+    <select id="getRoles" resultMap="rolMap">
+       select sr.cod idRol,
+            sr.nombre nombreRol,
+            sr.descripcion descripcionRol,
+            sr.activo activoRol,
+            sp.cod idPerfil,
+            sp.nombre nombrePerfil,
+            sp.descripcion descripcionPerfil,
+            sp.activo activoPerfil,
+            sf.cod idFunc,
+            sf.descripcion descripcionFunc,
+            sf.nombre nombreFunc,
+            sf.activo activoFunc
+        from seg_rol sr
+        join seg_rol_permiso srp on sr.cod = srp.cod
+        join seg_permiso sp on sp.cod = srp.cod_permiso and sp.activo is true
+        join seg_funcionalidad_permiso sfp on sfp.cod_permiso = sp.cod
+        join seg_funcionalidad sf on sf.cod = sfp.cod_func and sf.activo is true
+        where sr.activo is true
+        order by sr.nombre asc
+    </select>
+
+    <select id="getFuncionalidadesList" resultType="FuncionalidadDTO">
+        select
+            cf.cod id,
+            cf.nombre nombre,
+            cf.descripcion descripcion,
+            false activo
+        from
+            public.seg_funcionalidad cf
+    </select>
+
+    <insert id="insertRolUser" parameterType="UsuarioDTO">
+        INSERT INTO public.seg_rol_usuario
+        (cod_user, cod_rol, fecha)
+        VALUES(#{id}, #{rol}, now());
+    </insert>
+
+    <!--select id="getPerfilesList" resultType="PerfilDetalleDTO">
+        select cp.ctlper_id perfil,
+               cp.ctlper_nombre nombre,
+               cp.ctlper_descripcion descripcion,
+               cp.ctlper_activo activo,
+               cp.ctlper_funcionalidades funcionalidades
+        from
+            public.ctl_perfiles cp
+        where cp.ctlper_activo is true
+        order by cp.ctlper_id
+    </select>
+
+
+
+    <select id="userByNameNew" parameterType="String" resultType="UsuarioDTO">
+        select
+            cu.ctlusr_id username,
+            cu.ctlusr_nombres nombre,
+            cu.ctlusr_apellidos apellido,
+            cu.ctlusr_extras extras,
+            cu.ctlusr_creacion_fecha_hora fechaCreacion,
+            cu.ctlusr_modificacion_fecha_hora fechaModificacion,
+            cu.ctlusr_email email,
+            cu.ctlusr_contrasena "password",
+            cu.ctlusr_contrasena_cambiar cambiarPass,
+            cu.ctlusr_contrasena_siguiente_cambio sgteCambioPass,
+            cu.ctlusr_contrasena_ultimo_cambio ultCambioPass,
+            cu.ctlusr_contrasena_historial historialPass,
+            cu.ctlusr_acceso_exitoso_ultimo ultAccesoExitoso,
+            cu.ctlusr_intentos_fallidos accesoFallido,
+            cu.ctlusr_intento_fallido_ultimo ultAccesoFallido,
+            cu.ctlusr_estado estado,
+            cu.ctlusr_telefono telefono,
+            cu.ctlusr_documento_numero documento
+        from public.ctl_usuarios cu
+        where cu.ctlusr_id = #{usuario}
+    </select>
+
+    <select id="rolesByUserId" resultMap="rolMap" parameterType="Map">
+        select cr.ctlrol_id idRol,
+               cr.ctlrol_nombre nombreRol,
+               cr.ctlrol_descripcion descripcionRol,
+               cr.ctlrol_activo,
+               cp.ctlper_id idPerfil,
+               cp.ctlper_nombre nombrePerfil,
+               cp.ctlper_descripcion descripcionPerfil,
+               cp.ctlper_activo activoPerfil,
+               cp.ctlper_funcionalidades func
+        from ctl_usuarios_roles ur
+                 join ctl_roles cr on cr.ctlrol_id = ur.ctlrol_id and cr.ctlrol_activo is true
+                 join tol_sistemas ts on cr.tolsis_id = ts.tolsis_id and ts.tolsis_activo is true
+                 join ctl_roles_perfiles crp on cr.ctlrol_id = crp.ctlrol_id and crp.ctlrrp_activo is true
+                 join ctl_perfiles cp on crp.ctlper_id = cp.ctlper_id and cp.ctlper_activo is true
+        where ur.ptkusr_id = #{id}
+          and ur.ctlrur_activo is true
+          and ts.tolsis_nombre = #{empresa}
+    </select>
+
+    <update id="updatePass" parameterType="Map">
+        UPDATE public.ctl_usuarios
+        SET ctlusr_contrasena=#{newPass}, ctlusr_contrasena_cambiar=false, ctlusr_contrasena_ultimo_cambio=now(), ctlusr_contrasena_historial=#{historial}
+        WHERE ctlusr_id=#{idUsuario}
+    </update>
+
+    <select id="userById" resultType="UsuarioDTO" parameterType="java.lang.String">
+        select cu.ctlusr_id username,
+               cu.ctlusr_nombres nombre,
+               cu.ctlusr_apellidos apellido,
+               cu.ctlusr_extras extras,
+               cu.ctlusr_creacion_fecha_hora fechaCreacion,
+               cu.ctlusr_email email,
+               cu.ctlusr_contrasena_historial historialPass,
+               cu.ctlusr_estado estado,
+               cu.ctlusr_telefono telefono
+        from
+            ctl_usuarios cu
+        where cu.ctlusr_id = #{idUsuario}
+    </select>
+
+    <select id="entidadAsociada" resultType="EntidadUserDTO" parameterType="String">
+        select ut.ctlusr_id idUsuario,
+               ut.ctlrue_trade_network_id idEmpresa,
+               tn."name" nombreEmpresa,
+               tn.main_wallet_code billetera,
+               tn.agent_id idAgente,
+               tn.address direccion,
+               tn.contact contacto
+        from public.ctl_usuarios_empresas ut
+                 join kraken.trade_networks tn on ut.ctlrue_trade_network_id = tn.id
+        where ut.ctlrue_activo is true
+          and tn.status = 'ACTIVE'
+          and ut.ctlusr_id = #{idUsuario}
+    </select>
+
+    <select id="entidadById" resultType="EntidadUserDTO" parameterType="String">
+        select
+            tn.id idEmpresa,
+            tn."name" nombreEmpresa,
+            tn.main_wallet_code billetera,
+            tn.agent_id idAgente,
+            tn.address direccion,
+            tn.contact contacto
+        from kraken.trade_networks tn
+        where tn.status = 'ACTIVE'
+          and tn.id = #{idEntidad}
+    </select>
+
+    <select id="getData" parameterType="String" resultType="EmpresaDTO">
+        SELECT 	tn.id,
+                  tn."name" nombre,
+                  tn.address direccion,
+                  tn.agent_id ruc,
+                  case when tn.status='ACTIVE' then 'SI'
+                       else 'NO' end activo,
+                  tn.main_wallet_code billeteraMadre
+        FROM kraken.trade_networks tn
+        where tn.id = #{dato}
+    </select-->
+</mapper>
