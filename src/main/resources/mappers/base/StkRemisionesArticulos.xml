@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.StkRemisionesArticulosDAO">
+
+    <select id="getStkRemisionesArticulosList" resultType="StkRemisionesArticulosDTO">
+        select 
+        id id ,
+        cod_remisiones codRemisiones ,
+        cod_articulo codArticulo ,
+        cantidad cantidad 
+        from stk_remisiones_articulos 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getStkRemisionesArticulosListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from stk_remisiones_articulos;
+    </select>
+    <insert id="insertStkRemisionesArticulos" parameterType="StkRemisionesArticulosDTO">
+        INSERT INTO public.stk_remisiones_articulos
+        (
+        id, 
+        cod_remisiones, 
+        cod_articulo, 
+        cantidad) 
+        VALUES 
+        (
+        #{id}, 
+        #{codRemisiones}, 
+        #{codArticulo}, 
+        #{cantidad}); 
+    </insert>
+</mapper>

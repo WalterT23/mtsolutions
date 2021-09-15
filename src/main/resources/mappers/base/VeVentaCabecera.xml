@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.VeVentaCabeceraDAO">
+
+    <select id="getVeVentaCabeceraList" resultType="VeVentaCabeceraDTO">
+        select 
+        nro_factura nroFactura ,
+        id_timbrado idTimbrado ,
+        usuario_creacion usuarioCreacion ,
+        fecha_emision fechaEmision ,
+        usuario_modificacion usuarioModificacion ,
+        fecha_creacion fechaCreacion ,
+        contado contado ,
+        fecha_modificacion fechaModificacion ,
+        total_iva totalIva ,
+        total_general totalGeneral ,
+        cod_sucursal codSucursal ,
+        cod_vendedor codVendedor ,
+        ruc ruc 
+        from ve_venta_cabecera 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getVeVentaCabeceraListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from ve_venta_cabecera;
+    </select>
+    <insert id="insertVeVentaCabecera" parameterType="VeVentaCabeceraDTO">
+        INSERT INTO public.ve_venta_cabecera
+        (
+        nro_factura, 
+        id_timbrado, 
+        usuario_creacion, 
+        fecha_emision, 
+        usuario_modificacion, 
+        fecha_creacion, 
+        contado, 
+        fecha_modificacion, 
+        total_iva, 
+        total_general, 
+        cod_sucursal, 
+        cod_vendedor, 
+        ruc) 
+        VALUES 
+        (
+        #{nroFactura}, 
+        #{idTimbrado}, 
+        #{usuarioCreacion}, 
+        #{fechaEmision}, 
+        #{usuarioModificacion}, 
+        #{fechaCreacion}, 
+        #{contado}, 
+        #{fechaModificacion}, 
+        #{totalIva}, 
+        #{totalGeneral}, 
+        #{codSucursal}, 
+        #{codVendedor}, 
+        #{ruc}); 
+    </insert>
+</mapper>

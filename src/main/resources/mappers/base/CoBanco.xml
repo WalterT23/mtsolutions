@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.CoBancoDAO">
+
+    <select id="getCoBancoList" resultType="CoBancoDTO">
+        select 
+        id_banco idBanco ,
+        nombre_banco nombreBanco ,
+        nro_cuenta nroCuenta ,
+        id_proveedor idProveedor 
+        from co_banco 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getCoBancoListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from co_banco;
+    </select>
+    <insert id="insertCoBanco" parameterType="CoBancoDTO">
+        INSERT INTO public.co_banco
+        (
+        id_banco, 
+        nombre_banco, 
+        nro_cuenta, 
+        id_proveedor) 
+        VALUES 
+        (
+        #{idBanco}, 
+        #{nombreBanco}, 
+        #{nroCuenta}, 
+        #{idProveedor}); 
+    </insert>
+</mapper>

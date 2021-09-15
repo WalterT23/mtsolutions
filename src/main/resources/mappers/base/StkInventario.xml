@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.StkInventarioDAO">
+
+    <select id="getStkInventarioList" resultType="StkInventarioDTO">
+        select 
+        cod_sucursal codSucursal ,
+        cod_articulo codArticulo ,
+        stock_minimo stockMinimo ,
+        usuario_creacion usuarioCreacion ,
+        usuaro_moificacion usuaroMoificacion ,
+        fecha_creacion fechaCreacion ,
+        fecha_modificacion fechaModificacion ,
+        stock_actual stockActual ,
+        fecha fecha 
+        from stk_inventario 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getStkInventarioListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from stk_inventario;
+    </select>
+    <insert id="insertStkInventario" parameterType="StkInventarioDTO">
+        INSERT INTO public.stk_inventario
+        (
+        cod_sucursal, 
+        cod_articulo, 
+        stock_minimo, 
+        usuario_creacion, 
+        usuaro_moificacion, 
+        fecha_creacion, 
+        fecha_modificacion, 
+        stock_actual, 
+        fecha) 
+        VALUES 
+        (
+        #{codSucursal}, 
+        #{codArticulo}, 
+        #{stockMinimo}, 
+        #{usuarioCreacion}, 
+        #{usuaroMoificacion}, 
+        #{fechaCreacion}, 
+        #{fechaModificacion}, 
+        #{stockActual}, 
+        #{fecha}); 
+    </insert>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.StkAjusteInventarioDAO">
+
+    <select id="getStkAjusteInventarioList" resultType="StkAjusteInventarioDTO">
+        select 
+        cod_sucursal codSucursal ,
+        cod_articulo codArticulo ,
+        tipo_movimiento tipoMovimiento ,
+        fecha fecha ,
+        cantidad cantidad 
+        from stk_ajuste_inventario 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getStkAjusteInventarioListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from stk_ajuste_inventario;
+    </select>
+    <insert id="insertStkAjusteInventario" parameterType="StkAjusteInventarioDTO">
+        INSERT INTO public.stk_ajuste_inventario
+        (
+        cod_sucursal, 
+        cod_articulo, 
+        tipo_movimiento, 
+        fecha, 
+        cantidad) 
+        VALUES 
+        (
+        #{codSucursal}, 
+        #{codArticulo}, 
+        #{tipoMovimiento}, 
+        #{fecha}, 
+        #{cantidad}); 
+    </insert>
+</mapper>

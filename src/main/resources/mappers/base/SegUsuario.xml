@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.SegUsuarioDAO">
+
+    <select id="getSegUsuarioList" resultType="SegUsuarioDTO">
+        select 
+        cod cod ,
+        nombre nombre ,
+        apellido apellido ,
+        nro_documento nroDocumento ,
+        direccion direccion ,
+        estado estado ,
+        telefono telefono ,
+        password password ,
+        fecha_nacimiento fechaNacimiento ,
+        reset_password resetPassword ,
+        fecha_creacion fechaCreacion ,
+        fecha_modificacion fechaModificacion ,
+        usuario_creacion usuarioCreacion ,
+        historial_password historialPassword ,
+        correo correo ,
+        datos_adicionales datosAdicionales 
+        from seg_usuario 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getSegUsuarioListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from seg_usuario;
+    </select>
+    <insert id="insertSegUsuario" parameterType="SegUsuarioDTO">
+        INSERT INTO public.seg_usuario
+        (
+        cod, 
+        nombre, 
+        apellido, 
+        nro_documento, 
+        direccion, 
+        estado, 
+        telefono, 
+        password, 
+        fecha_nacimiento, 
+        reset_password, 
+        fecha_creacion, 
+        fecha_modificacion, 
+        usuario_creacion, 
+        historial_password, 
+        correo, 
+        datos_adicionales) 
+        VALUES 
+        (
+        #{cod}, 
+        #{nombre}, 
+        #{apellido}, 
+        #{nroDocumento}, 
+        #{direccion}, 
+        #{estado}, 
+        #{telefono}, 
+        #{password}, 
+        #{fechaNacimiento}, 
+        #{resetPassword}, 
+        #{fechaCreacion}, 
+        #{fechaModificacion}, 
+        #{usuarioCreacion}, 
+        #{historialPassword}, 
+        #{correo}, 
+        #{datosAdicionales}); 
+    </insert>
+</mapper>

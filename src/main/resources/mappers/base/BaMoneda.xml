@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.BaMonedaDAO">
+
+    <select id="getBaMonedaList" resultType="BaMonedaDTO">
+        select 
+        id_moeda idMoeda ,
+        descripcion descripcion ,
+        codigo codigo ,
+        estado estado ,
+        cotizacion_dia cotizacionDia 
+        from ba_moneda 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getBaMonedaListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from ba_moneda;
+    </select>
+    <insert id="insertBaMoneda" parameterType="BaMonedaDTO">
+        INSERT INTO public.ba_moneda
+        (
+        id_moeda, 
+        descripcion, 
+        codigo, 
+        estado, 
+        cotizacion_dia) 
+        VALUES 
+        (
+        #{idMoeda}, 
+        #{descripcion}, 
+        #{codigo}, 
+        #{estado}, 
+        #{cotizacionDia}); 
+    </insert>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.StkArticuloDAO">
+
+    <select id="getStkArticuloList" resultType="StkArticuloDTO">
+        select 
+        cod_articulo codArticulo ,
+        id_lista_precio idListaPrecio ,
+        descripcion descripcion ,
+        costo_unitario costoUnitario ,
+        ubicacion ubicacion ,
+        ultimo_costo ultimoCosto ,
+        precio_venta precioVenta ,
+        categoria categoria ,
+        id_proveedor idProveedor 
+        from stk_articulo 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getStkArticuloListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from stk_articulo;
+    </select>
+    <insert id="insertStkArticulo" parameterType="StkArticuloDTO">
+        INSERT INTO public.stk_articulo
+        (
+        cod_articulo, 
+        id_lista_precio, 
+        descripcion, 
+        costo_unitario, 
+        ubicacion, 
+        ultimo_costo, 
+        precio_venta, 
+        categoria, 
+        id_proveedor) 
+        VALUES 
+        (
+        #{codArticulo}, 
+        #{idListaPrecio}, 
+        #{descripcion}, 
+        #{costoUnitario}, 
+        #{ubicacion}, 
+        #{ultimoCosto}, 
+        #{precioVenta}, 
+        #{categoria}, 
+        #{idProveedor}); 
+    </insert>
+</mapper>
