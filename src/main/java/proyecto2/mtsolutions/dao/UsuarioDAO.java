@@ -13,6 +13,7 @@ import java.util.List;
 @Mapper
 public interface UsuarioDAO {
     UsuarioDTO userByName(@Param("username") String username);
+    UsuarioDTO userByNameView(@Param("username") String username);
     List<RolDTO> rolesByUserId(@Param("username") String username);
     List<UsuarioDTO> getUsuariosList(@Param("cantidad") Integer cantidadRegistro,
 
@@ -23,9 +24,11 @@ public interface UsuarioDAO {
                                                @Param("offset") Integer offset);
     BigDecimal buscarUsuariosListCount(@Param("filtro") FiltroDTO filtro);
     int crearUsuario(@Param("dto")UsuarioDTO dto, @Param("user") String user, @Param("pass") String pass);
+    int updateUsuario(@Param("dto")UsuarioDTO dto, @Param("user") String user);
     List<RolDTO> getRoles();
     List<FuncionalidadDTO> getFuncionalidadesList();
     int insertRolUser(UsuarioDTO user);
+    int updateRolUSer(UsuarioDTO user);
     //List<PerfilDetalleDTO> getPerfilesList();
 
 

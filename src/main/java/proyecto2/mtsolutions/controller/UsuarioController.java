@@ -94,16 +94,15 @@ public class UsuarioController {
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
-    @PostMapping(value="/editar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> crearUsuario(HttpServletRequest request,
+    @PostMapping(value="/obtener", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> obtenerUsuario(HttpServletRequest request,
                                           @RequestBody UsuarioDTO dto) throws Exception {
         String user = request.getHeader(JWTServiceImpl.USER_STRING);
         log.info(request.getContextPath());
         MtSolutionsResponse resp = new MtSolutionsResponse();
         resp.setSuccess(true);
-        resp.setData(this.service.crearUsuario(dto, user));
+        resp.setData(this.service.obtenerUsuario(dto, user));
         resp.setMessage("OK");
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
-
 }

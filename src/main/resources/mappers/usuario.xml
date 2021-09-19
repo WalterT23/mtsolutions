@@ -37,6 +37,19 @@
         where su.cod = #{username}
     </select>
 
+    <select id="userByNameView" parameterType="Map" resultType="UsuarioDTO">
+        select su.cod id,
+            su.nombre nombre,
+            su.apellido apellido,
+            su.nro_documento documento,
+            su.telefono telefono,
+            su.correo email,
+            su.estado estado,
+            su.direccion direccion
+        from seg_usuario su
+        where su.cod = #{username}
+    </select>
+
     <select id="rolesByUserId" parameterType="Map" resultMap="rolMap">
         select sr.cod idRol,
             sr.nombre nombreRol,
@@ -66,15 +79,16 @@
             su.nro_documento documento,
             su.telefono telefono,
             su.correo email,
-            su.estado estado,
-            su."password"
+            su.estado estado
         from seg_usuario su
+        where su.estado = 'ACTIVO'
         order by su.fecha_creacion desc limit #{cantidad} offset #{offset}
     </select>
     <select id="getUsuariosListCount"  resultType="BigDecimal">
         select count(*)
         from
-            seg_usuario u;
+            seg_usuario u
+        where u.estado = 'ACTIVO'
     </select>
     <select id="buscarUsuariosList" parameterType="Map" resultType="UsuarioDTO">
         <bind name="fil" value="'%' + filtro.valor + '%'" />
@@ -90,6 +104,7 @@
         or lower(su.nombre) like  lower(#{fil})
         or lower(su.apellido) like lower(#{fil})
         or lower(concat(su.nombre,' ',su.apellido)) like lower(#{fil})
+        and su.estado = 'ACTIVO'
         order by su.fecha_creacion desc limit #{cantidad} offset #{offset}
     </select>
     <select id="buscarUsuariosListCount"  parameterType="Map" resultType="BigDecimal">
@@ -101,6 +116,7 @@
         or lower(su.nombre) like  lower(#{fil})
         or lower(su.apellido) like lower(#{fil})
         or lower(concat(su.nombre,' ',su.apellido)) like lower(#{fil})
+        and su.estado = 'ACTIVO'
     </select>
 
     <insert id="crearUsuario" parameterType="Map">
@@ -129,8 +145,8 @@
         from seg_rol sr
         join seg_rol_permiso srp on sr.cod = srp.cod
         join seg_permiso sp on sp.cod = srp.cod_permiso and sp.activo is true
-        join seg_funcionalidad_permiso sfp on sfp.cod_permiso = sp.cod
-        join seg_funcionalidad sf on sf.cod = sfp.cod_func and sf.activo is true
+        left join seg_funcionalidad_permiso sfp on sfp.cod_permiso = sp.cod
+        left join seg_funcionalidad sf on sf.cod = sfp.cod_func and sf.activo is true
         where sr.activo is true
         order by sr.nombre asc
     </select>
@@ -148,9 +164,21 @@
     <insert id="insertRolUser" parameterType="UsuarioDTO">
         INSERT INTO public.seg_rol_usuario
         (cod_user, cod_rol, fecha)
-        VALUES(#{id}, #{rol}, now());
+        VALUES(#{id}, #{rol}, now())
     </insert>
 
+    <update id="updateUsuario" parameterType="Map">
+        UPDATE public.seg_usuario SET
+       nombre=#{dto.nombre}, apellido=#{dto.apellido}, nro_documento=#{dto.documento}, direccion=#{dto.direccion},
+       telefono=#{dto.telefono}, fecha_modificacion=now(), correo=#{dto.email}, estado=#{dto.estado}
+		WHERE cod=#{dto.id}
+    </update>
+
+    <update id="updateRolUSer" parameterType="UsuarioDTO">
+        UPDATE public.seg_rol_usuario
+        SET fecha=now(), cod_rol = #{rol}
+        WHERE cod_user=#{id}
+    </update>
     <!--select id="getPerfilesList" resultType="PerfilDetalleDTO">
         select cp.ctlper_id perfil,
                cp.ctlper_nombre nombre,

@@ -63,6 +63,14 @@ public class ControllerException extends ResponseEntityExceptionHandler {
                 err.setMessage("El usuario ya existe en el sistema");
                 return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
             }
+            case NO_TITULO_ROL: {
+                err.setMessage("Falta el titulo del rol");
+                return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
+            }
+            case NO_PERFIL_LIST: {
+                err.setMessage("No se encontro la lista de perfiles");
+                return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
+            }
             default: {
                 err.setMessage("Ocurrió un error inesperado, la transacción no se completó");
                 return new ResponseEntity<>(err, HttpStatus.INTERNAL_SERVER_ERROR);

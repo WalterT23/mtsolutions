@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.RolDAO">
+    <delete id="eliminarAsociacion" parameterType="RolUpdateDTO">
+        DELETE FROM public.seg_funcionalidad_permiso
+        WHERE cod_permiso=#{idPerfil} AND cod_func=#{idFuncion};
+    </delete>
+    <insert id="insertarAsociacion" parameterType="RolUpdateDTO">
+        insert into public.seg_funcionalidad_permiso
+            (cod_permiso, cod_func, fecha)
+        values(#{idPerfil}, #{idFuncion}, now());
+    </insert>
+    <insert id="insertarPermiso" parameterType="PerfilDTO">
+        insert into public.seg_permiso
+            (cod, nombre, activo, descripcion)
+        values(#{id}, #{nombre}, #{activo}, #{descripcion});
+    </insert>
+    <insert id="insertarRol" parameterType="RolDTO">
+        insert into public.seg_rol
+            (cod, nombre, descripcion, activo)
+        values(#{id}, #{nombre}, #{descripcion}, #{activo});
+    </insert>
+    <insert id="insertarRolPerfil" parameterType="RolUpdateDTO">
+        insert into public.seg_rol_permiso
+            (cod_permiso, cod, "date")
+        values(#{idPerfil}, #{idRol}, now());
+    </insert>
+</mapper>

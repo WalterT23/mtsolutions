@@ -1,7 +1,5 @@
 package proyecto2.mtsolutions.services.impl;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,8 +12,6 @@ import proyecto2.mtsolutions.services.UsuarioService;
 import proyecto2.mtsolutions.utils.CommonUtils;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -152,32 +148,69 @@ public class UsuarioServiceImpl implements UsuarioService {
                 log.error(ErrorCode.PARAMETROS_FALTANTES.toString());
                 throw new ServiceException(ErrorCode.PARAMETROS_FALTANTES);
             }
-            String usr = ctrl.obtenerUsuario(dto.getNombre(), dto.getApellido());
-            if (ctrl.isNull(usr)) {
-                log.error(ErrorCode.ERROR_GENERAR_USUARIO.toString());
-                throw new ServiceException(ErrorCode.ERROR_GENERAR_USUARIO);
-            }
-            UsuarioDTO exi = usuarioDAO.userByName(usr);
-            if (!ctrl.isNull(exi)) {
-                log.error(ErrorCode.USUARIO_EXISTENTE.toString());
-                throw new ServiceException(ErrorCode.USUARIO_EXISTENTE);
-            }
-            dto.setId(usr);
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(BCRYPT_COMPLEXITY);
-            String newPass = passwordEncoder.encode("123");
-            dto.setEstado("ACTIVO");
-            usuarioDAO.crearUsuario(dto, usuario, newPass);
             if (ctrl.isNull(dto.getId())) {
-                re = "No creado";
+                String usr = ctrl.obtenerUsuario(dto.getNombre(), dto.getApellido());
+                if (ctrl.isNull(usr)) {
+                    log.error(ErrorCode.ERROR_GENERAR_USUARIO.toString());
+                    throw new ServiceException(ErrorCode.ERROR_GENERAR_USUARIO);
+                }
+                UsuarioDTO exi = usuarioDAO.userByName(usr);
+                if (!ctrl.isNull(exi)) {
+                    log.error(ErrorCode.USUARIO_EXISTENTE.toString());
+                    throw new ServiceException(ErrorCode.USUARIO_EXISTENTE);
+                }
+                dto.setId(usr);
+                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(BCRYPT_COMPLEXITY);
+                String newPass = passwordEncoder.encode(dto.getPass()==null?"123":dto.getPass());
+                dto.setEstado("ACTIVO");
+                usuarioDAO.crearUsuario(dto, usuario, newPass);
+                if (ctrl.isNull(dto.getId())) {
+                    re = "No creado";
+                } else {
+                    int xc = usuarioDAO.insertRolUser(dto);
+                    if (xc==0) {
+                        re = "Usuario creado pero no fue posible asignar un rol";
+                    }
+                }
             } else {
-                int xc = usuarioDAO.insertRolUser(dto);
-                if (xc==0) {
-                    re = "Usuario creado pero no fue posible asignar un rol";
+                re = "Datos actualizados correctamente";
+                int x = usuarioDAO.updateUsuario(dto, usuario);
+                if (x == 0) {
+                    re = "No actualizado";
+                } else {
+                    int xc = usuarioDAO.updateRolUSer(dto);
                 }
             }
+
+
             return re;
         } catch (ServiceException e) {
           throw new ServiceException(e.getErrorCode());
+        } catch (Exception e) {
+            log.error(e.toString());
+            throw new ServiceException(ErrorCode.INTERNAL_ERROR, e.toString());
+        }
+    }
+
+    @Override
+    public UsuarioDTO obtenerUsuario(UsuarioDTO dto, String usuario) throws Exception {
+        try {
+            log.info(getClass().toString());
+            log.info("Usuario conectado: "+usuario);
+            log.info("Servicio: obtenerUsuario ");
+            if (ctrl.isNull(dto)) {
+                log.error(ErrorCode.NO_BODY_DATA.toString());
+                throw new ServiceException(ErrorCode.NO_BODY_DATA);
+            }
+            if (ctrl.isNull(dto.getId())) {
+                log.error(ErrorCode.PARAMETROS_FALTANTES.toString());
+                throw new ServiceException(ErrorCode.PARAMETROS_FALTANTES);
+            }
+            UsuarioDTO exi = usuarioDAO.userByNameView(dto.getId());
+            exi.setRoles(usuarioDAO.rolesByUserId(exi.getId()));
+            return exi;
+        } catch (ServiceException e) {
+            throw new ServiceException(e.getErrorCode());
         } catch (Exception e) {
             log.error(e.toString());
             throw new ServiceException(ErrorCode.INTERNAL_ERROR, e.toString());

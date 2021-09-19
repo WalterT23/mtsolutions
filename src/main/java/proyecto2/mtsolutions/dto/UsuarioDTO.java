@@ -22,6 +22,7 @@ public class UsuarioDTO extends User {
     private String historialPassword;
     private String direccion;
     private String rol;
+    private String pass;
     private List<RolDTO> roles;
 
     public UsuarioDTO() {
@@ -143,6 +144,14 @@ public class UsuarioDTO extends User {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 }
 
