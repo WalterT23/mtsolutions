@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.VeVentaDetalleDAO">
+
+    <select id="getVeVentaDetalleList" resultType="VeVentaDetalleDTO">
+        select 
+        nro_factura nroFactura ,
+        nro_item nroItem ,
+        cod_articulo codArticulo ,
+        cantidad cantidad ,
+        precio precio ,
+        monto_iva montoIva ,
+        monto_total montoTotal ,
+        descuento descuento 
+        from ve_venta_detalle 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getVeVentaDetalleListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from ve_venta_detalle;
+    </select>
+    <insert id="insertVeVentaDetalle" parameterType="VeVentaDetalleDTO">
+        INSERT INTO public.ve_venta_detalle
+        (
+        nro_factura, 
+        nro_item, 
+        cod_articulo, 
+        cantidad, 
+        precio, 
+        monto_iva, 
+        monto_total, 
+        descuento) 
+        VALUES 
+        (
+        #{nroFactura}, 
+        #{nroItem}, 
+        #{codArticulo}, 
+        #{cantidad}, 
+        #{precio}, 
+        #{montoIva}, 
+        #{montoTotal}, 
+        #{descuento}); 
+    </insert>
+</mapper>

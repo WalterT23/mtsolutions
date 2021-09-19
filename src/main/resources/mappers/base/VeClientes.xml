@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.VeClientesDAO">
+
+    <select id="getVeClientesList" resultType="VeClientesDTO">
+        select 
+        ruc ruc ,
+        dv dv ,
+        direccion direccion ,
+        razon_social razonSocial ,
+        email email ,
+        es_juridico esJuridico ,
+        telefono telefono ,
+        usuario_creacion usuarioCreacion ,
+        usuario_modificaicon usuarioModificaicon ,
+        fecha_creacion fechaCreacion ,
+        fecha_modificacion fechaModificacion 
+        from ve_clientes 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getVeClientesListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from ve_clientes;
+    </select>
+    <insert id="insertVeClientes" parameterType="VeClientesDTO">
+        INSERT INTO public.ve_clientes
+        (
+        ruc, 
+        dv, 
+        direccion, 
+        razon_social, 
+        email, 
+        es_juridico, 
+        telefono, 
+        usuario_creacion, 
+        usuario_modificaicon, 
+        fecha_creacion, 
+        fecha_modificacion) 
+        VALUES 
+        (
+        #{ruc}, 
+        #{dv}, 
+        #{direccion}, 
+        #{razonSocial}, 
+        #{email}, 
+        #{esJuridico}, 
+        #{telefono}, 
+        #{usuarioCreacion}, 
+        #{usuarioModificaicon}, 
+        #{fechaCreacion}, 
+        #{fechaModificacion}); 
+    </insert>
+</mapper>

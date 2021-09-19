@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.StkRemisionesDAO">
+
+    <select id="getStkRemisionesList" resultType="StkRemisionesDTO">
+        select 
+        cod_remisiones codRemisiones ,
+        fecha_transferencia fechaTransferencia ,
+        cod_sucursal_origen codSucursalOrigen ,
+        cod_sucursal_destino codSucursalDestino ,
+        empleado_emisor empleadoEmisor ,
+        empleado_receptor empleadoReceptor 
+        from stk_remisiones 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getStkRemisionesListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from stk_remisiones;
+    </select>
+    <insert id="insertStkRemisiones" parameterType="StkRemisionesDTO">
+        INSERT INTO public.stk_remisiones
+        (
+        cod_remisiones, 
+        fecha_transferencia, 
+        cod_sucursal_origen, 
+        cod_sucursal_destino, 
+        empleado_emisor, 
+        empleado_receptor) 
+        VALUES 
+        (
+        #{codRemisiones}, 
+        #{fechaTransferencia}, 
+        #{codSucursalOrigen}, 
+        #{codSucursalDestino}, 
+        #{empleadoEmisor}, 
+        #{empleadoReceptor}); 
+    </insert>
+</mapper>

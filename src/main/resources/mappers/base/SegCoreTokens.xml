@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.SegCoreTokensDAO">
+
+    <select id="getSegCoreTokensList" resultType="SegCoreTokensDTO">
+        select 
+        id id ,
+        uuid uuid ,
+        issued_at issuedAt ,
+        remote_ip remoteIp ,
+        token_type tokenType ,
+        user_agent userAgent ,
+        security_profile_id securityProfileId ,
+        app_id appId ,
+        valid valid ,
+        username username ,
+        expiration expiration 
+        from seg_core_tokens 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getSegCoreTokensListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from seg_core_tokens;
+    </select>
+    <insert id="insertSegCoreTokens" parameterType="SegCoreTokensDTO">
+        INSERT INTO public.seg_core_tokens
+        (
+        id, 
+        uuid, 
+        issued_at, 
+        remote_ip, 
+        token_type, 
+        user_agent, 
+        security_profile_id, 
+        app_id, 
+        valid, 
+        username, 
+        expiration) 
+        VALUES 
+        (
+        #{id}, 
+        #{uuid}, 
+        #{issuedAt}, 
+        #{remoteIp}, 
+        #{tokenType}, 
+        #{userAgent}, 
+        #{securityProfileId}, 
+        #{appId}, 
+        #{valid}, 
+        #{username}, 
+        #{expiration}); 
+    </insert>
+</mapper>

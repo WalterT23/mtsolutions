@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.CoOrdenCompraDAO">
+
+    <select id="getCoOrdenCompraList" resultType="CoOrdenCompraDTO">
+        select 
+        id_oc idOc ,
+        usuario_solicitante usuarioSolicitante ,
+        descripcion descripcion ,
+        fecha_emision fechaEmision ,
+        fecha_cierre fechaCierre ,
+        usuario_aprobador usuarioAprobador ,
+        estado estado ,
+        motivo motivo 
+        from co_orden_compra 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getCoOrdenCompraListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from co_orden_compra;
+    </select>
+    <insert id="insertCoOrdenCompra" parameterType="CoOrdenCompraDTO">
+        INSERT INTO public.co_orden_compra
+        (
+        id_oc, 
+        usuario_solicitante, 
+        descripcion, 
+        fecha_emision, 
+        fecha_cierre, 
+        usuario_aprobador, 
+        estado, 
+        motivo) 
+        VALUES 
+        (
+        #{idOc}, 
+        #{usuarioSolicitante}, 
+        #{descripcion}, 
+        #{fechaEmision}, 
+        #{fechaCierre}, 
+        #{usuarioAprobador}, 
+        #{estado}, 
+        #{motivo}); 
+    </insert>
+</mapper>

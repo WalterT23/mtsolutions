@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.StkListaPrecioDAO">
+
+    <select id="getStkListaPrecioList" resultType="StkListaPrecioDTO">
+        select 
+        id_lista_precio idListaPrecio ,
+        porcentaje porcentaje ,
+        operacion operacion 
+        from stk_lista_precio 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getStkListaPrecioListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from stk_lista_precio;
+    </select>
+    <insert id="insertStkListaPrecio" parameterType="StkListaPrecioDTO">
+        INSERT INTO public.stk_lista_precio
+        (
+        id_lista_precio, 
+        porcentaje, 
+        operacion) 
+        VALUES 
+        (
+        #{idListaPrecio}, 
+        #{porcentaje}, 
+        #{operacion}); 
+    </insert>
+</mapper>

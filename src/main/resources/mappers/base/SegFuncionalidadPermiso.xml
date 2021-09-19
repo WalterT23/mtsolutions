@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.SegFuncionalidadPermisoDAO">
+
+    <select id="getSegFuncionalidadPermisoList" resultType="SegFuncionalidadPermisoDTO">
+        select 
+        cod_permiso codPermiso ,
+        cod_func codFunc ,
+        fecha fecha 
+        from seg_funcionalidad_permiso 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getSegFuncionalidadPermisoListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from seg_funcionalidad_permiso;
+    </select>
+    <insert id="insertSegFuncionalidadPermiso" parameterType="SegFuncionalidadPermisoDTO">
+        INSERT INTO public.seg_funcionalidad_permiso
+        (
+        cod_permiso, 
+        cod_func, 
+        fecha) 
+        VALUES 
+        (
+        #{codPermiso}, 
+        #{codFunc}, 
+        #{fecha}); 
+    </insert>
+</mapper>

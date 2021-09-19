@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.CoPlanPagoDAO">
+
+    <select id="getCoPlanPagoList" resultType="CoPlanPagoDTO">
+        select 
+        nro_factura_compra nroFacturaCompra ,
+        cantidad_cuotas cantidadCuotas ,
+        monto_cuota montoCuota 
+        from co_plan_pago 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getCoPlanPagoListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from co_plan_pago;
+    </select>
+    <insert id="insertCoPlanPago" parameterType="CoPlanPagoDTO">
+        INSERT INTO public.co_plan_pago
+        (
+        nro_factura_compra, 
+        cantidad_cuotas, 
+        monto_cuota) 
+        VALUES 
+        (
+        #{nroFacturaCompra}, 
+        #{cantidadCuotas}, 
+        #{montoCuota}); 
+    </insert>
+</mapper>

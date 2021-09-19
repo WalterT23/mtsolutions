@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.CoProveedorDAO">
+
+    <select id="getCoProveedorList" resultType="CoProveedorDTO">
+        select 
+        id_proveedor idProveedor ,
+        nombre nombre ,
+        ruc ruc ,
+        direccion direccion ,
+        telefono telefono ,
+        usuario_creacion usuarioCreacion ,
+        correo correo ,
+        usuario_modificacion usuarioModificacion ,
+        fecha_creacion fechaCreacion ,
+        estado estado ,
+        fecha_modificacion fechaModificacion 
+        from co_proveedor 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getCoProveedorListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from co_proveedor;
+    </select>
+    <insert id="insertCoProveedor" parameterType="CoProveedorDTO">
+        INSERT INTO public.co_proveedor
+        (
+        id_proveedor, 
+        nombre, 
+        ruc, 
+        direccion, 
+        telefono, 
+        usuario_creacion, 
+        correo, 
+        usuario_modificacion, 
+        fecha_creacion, 
+        estado, 
+        fecha_modificacion) 
+        VALUES 
+        (
+        #{idProveedor}, 
+        #{nombre}, 
+        #{ruc}, 
+        #{direccion}, 
+        #{telefono}, 
+        #{usuarioCreacion}, 
+        #{correo}, 
+        #{usuarioModificacion}, 
+        #{fechaCreacion}, 
+        #{estado}, 
+        #{fechaModificacion}); 
+    </insert>
+</mapper>

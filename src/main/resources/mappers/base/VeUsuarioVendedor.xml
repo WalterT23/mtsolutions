@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.VeUsuarioVendedorDAO">
+
+    <select id="getVeUsuarioVendedorList" resultType="VeUsuarioVendedorDTO">
+        select 
+        cod_vendedor codVendedor ,
+        procentaje_comision procentajeComision ,
+        cod_usuario codUsuario 
+        from ve_usuario_vendedor 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getVeUsuarioVendedorListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from ve_usuario_vendedor;
+    </select>
+    <insert id="insertVeUsuarioVendedor" parameterType="VeUsuarioVendedorDTO">
+        INSERT INTO public.ve_usuario_vendedor
+        (
+        cod_vendedor, 
+        procentaje_comision, 
+        cod_usuario) 
+        VALUES 
+        (
+        #{codVendedor}, 
+        #{procentajeComision}, 
+        #{codUsuario}); 
+    </insert>
+</mapper>

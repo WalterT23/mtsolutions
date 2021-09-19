@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.VeTimbradoDAO">
+
+    <select id="getVeTimbradoList" resultType="VeTimbradoDTO">
+        select 
+        id_timbrado idTimbrado ,
+        activo activo ,
+        numero_inicio numeroInicio ,
+        numero_fin numeroFin ,
+        fecha_desde fechaDesde ,
+        fecha_hasta fechaHasta 
+        from ve_timbrado 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getVeTimbradoListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from ve_timbrado;
+    </select>
+    <insert id="insertVeTimbrado" parameterType="VeTimbradoDTO">
+        INSERT INTO public.ve_timbrado
+        (
+        id_timbrado, 
+        activo, 
+        numero_inicio, 
+        numero_fin, 
+        fecha_desde, 
+        fecha_hasta) 
+        VALUES 
+        (
+        #{idTimbrado}, 
+        #{activo}, 
+        #{numeroInicio}, 
+        #{numeroFin}, 
+        #{fechaDesde}, 
+        #{fechaHasta}); 
+    </insert>
+</mapper>

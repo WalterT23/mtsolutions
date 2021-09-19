@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.CoTipoGastoDAO">
+
+    <select id="getCoTipoGastoList" resultType="CoTipoGastoDTO">
+        select 
+        id id ,
+        descripcion descripcion ,
+        estado estado 
+        from co_tipo_gasto 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getCoTipoGastoListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from co_tipo_gasto;
+    </select>
+    <insert id="insertCoTipoGasto" parameterType="CoTipoGastoDTO">
+        INSERT INTO public.co_tipo_gasto
+        (
+        id, 
+        descripcion, 
+        estado) 
+        VALUES 
+        (
+        #{id}, 
+        #{descripcion}, 
+        #{estado}); 
+    </insert>
+</mapper>

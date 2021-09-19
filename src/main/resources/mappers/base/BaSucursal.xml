@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.BaSucursalDAO">
+
+    <select id="getBaSucursalList" resultType="BaSucursalDTO">
+        select 
+        cod_sucursal codSucursal ,
+        nombre nombre ,
+        direccion direccion ,
+        estado estado ,
+        fecha_creacion fechaCreacion ,
+        telefono telefono ,
+        correo correo 
+        from ba_sucursal 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getBaSucursalListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from ba_sucursal;
+    </select>
+    <insert id="insertBaSucursal" parameterType="BaSucursalDTO">
+        INSERT INTO public.ba_sucursal
+        (
+        cod_sucursal, 
+        nombre, 
+        direccion, 
+        estado, 
+        fecha_creacion, 
+        telefono, 
+        correo) 
+        VALUES 
+        (
+        #{codSucursal}, 
+        #{nombre}, 
+        #{direccion}, 
+        #{estado}, 
+        #{fechaCreacion}, 
+        #{telefono}, 
+        #{correo}); 
+    </insert>
+</mapper>

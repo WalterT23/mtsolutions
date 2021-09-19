@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.CoComprasDetalleDAO">
+
+    <select id="getCoComprasDetalleList" resultType="CoComprasDetalleDTO">
+        select 
+        nro_item nroItem ,
+        nro_factura nroFactura ,
+        cantidad cantidad ,
+        precio precio ,
+        descuento descuento ,
+        monto_iva montoIva ,
+        monto_total montoTotal ,
+        cod_articulo codArticulo 
+        from co_compras_detalle 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getCoComprasDetalleListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from co_compras_detalle;
+    </select>
+    <insert id="insertCoComprasDetalle" parameterType="CoComprasDetalleDTO">
+        INSERT INTO public.co_compras_detalle
+        (
+        nro_item, 
+        nro_factura, 
+        cantidad, 
+        precio, 
+        descuento, 
+        monto_iva, 
+        monto_total, 
+        cod_articulo) 
+        VALUES 
+        (
+        #{nroItem}, 
+        #{nroFactura}, 
+        #{cantidad}, 
+        #{precio}, 
+        #{descuento}, 
+        #{montoIva}, 
+        #{montoTotal}, 
+        #{codArticulo}); 
+    </insert>
+</mapper>

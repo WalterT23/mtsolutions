@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.SegRolPermisoDAO">
+
+    <select id="getSegRolPermisoList" resultType="SegRolPermisoDTO">
+        select 
+        cod_permiso codPermiso ,
+        cod cod ,
+        date date 
+        from seg_rol_permiso 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getSegRolPermisoListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from seg_rol_permiso;
+    </select>
+    <insert id="insertSegRolPermiso" parameterType="SegRolPermisoDTO">
+        INSERT INTO public.seg_rol_permiso
+        (
+        cod_permiso, 
+        cod, 
+        date) 
+        VALUES 
+        (
+        #{codPermiso}, 
+        #{cod}, 
+        #{date}); 
+    </insert>
+</mapper>

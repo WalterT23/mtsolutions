@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.SegRolDAO">
+
+    <select id="getSegRolList" resultType="SegRolDTO">
+        select 
+        cod cod ,
+        nombre nombre ,
+        descripcion descripcion ,
+        activo activo 
+        from seg_rol 
+        limit #{cantidad} offset #{offset}
+    </select>
+    <select id="getSegRolListCount"  resultType="BigDecimal">
+        select 
+        count(*) 
+        from seg_rol;
+    </select>
+    <insert id="insertSegRol" parameterType="SegRolDTO">
+        INSERT INTO public.seg_rol
+        (
+        cod, 
+        nombre, 
+        descripcion, 
+        activo) 
+        VALUES 
+        (
+        #{cod}, 
+        #{nombre}, 
+        #{descripcion}, 
+        #{activo}); 
+    </insert>
+</mapper>
