@@ -105,12 +105,12 @@ public class JWTServiceImpl implements JWTService {
             tokenDTO.setAppId("mt_solutions");
             tokenDTO.setValid(true);
 
-            TokenDTO previousToken = tokenDAO.tokenByUsername(username);
+            /*TokenDTO previousToken = tokenDAO.tokenByUsername(username);
 
             if (previousToken != null) {
                 //tokenDAO.deleteToken(previousToken.getUuid());
                 return null;
-            }
+            }*/
             tokenDAO.insertToken(tokenDTO);
 
         } catch (Exception e) {

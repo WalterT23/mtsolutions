@@ -4,9 +4,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="proyecto2.mtsolutions.dao.base.CoProveedorDAO">
-
-    <select id="getCoProveedorList" resultType="CoProveedorDTO">
-        select 
+    <sql id="tablaProveedor">
+        select
         id_proveedor idProveedor ,
         nombre nombre ,
         ruc ruc ,
@@ -17,19 +16,22 @@
         usuario_modificacion usuarioModificacion ,
         fecha_creacion fechaCreacion ,
         estado estado ,
-        fecha_modificacion fechaModificacion 
-        from co_proveedor 
+        fecha_modificacion fechaModificacion
+        from co_proveedor
+    </sql>
+
+    <select id="getCoProveedorList" resultType="CoProveedorDTO">
+       <include refid="tablaProveedor"></include>
         limit #{cantidad} offset #{offset}
     </select>
     <select id="getCoProveedorListCount"  resultType="BigDecimal">
         select 
         count(*) 
-        from co_proveedor;
+        from co_proveedor
     </select>
     <insert id="insertCoProveedor" parameterType="CoProveedorDTO">
         INSERT INTO public.co_proveedor
         (
-        id_proveedor, 
         nombre, 
         ruc, 
         direccion, 
@@ -42,7 +44,6 @@
         fecha_modificacion) 
         VALUES 
         (
-        #{idProveedor}, 
         #{nombre}, 
         #{ruc}, 
         #{direccion}, 
@@ -54,4 +55,39 @@
         #{estado}, 
         #{fechaModificacion}); 
     </insert>
+
+    <select id="buscarProveedorList" parameterType="Map" resultType="CoProveedorDTO">
+        <bind name="fil" value="'%' + filtro.valor + '%'" />
+        <include refid="tablaProveedor"></include>
+        where
+        lower(nombre) like lower(#{fil})
+        or lower(ruc) like lower(#{fil})
+        or lower(direccion) like lower(#{fil})
+        or lower(correo) like lower(#{fil})
+        or lower(usuario_creacion) like lower(#{fil})
+        order by fecha_creacion desc limit #{cantidad} offset #{offset}
+    </select>
+    <select id="buscarProveedorListCount"  parameterType="Map" resultType="BigDecimal">
+        <bind name="fil" value="'%' + filtro.valor + '%'" />
+        select count(*)
+        from co_proveedor
+        where
+        lower(nombre) like lower(#{fil})
+        or lower(ruc) like lower(#{fil})
+        or lower(direccion) like lower(#{fil})
+        or lower(correo) like lower(#{fil})
+        or lower(usuario_creacion) like lower(#{fil})
+    </select>
+
+    <select id="getCoProveedorById" parameterType="Map" resultType="CoProveedorDTO">
+        <include refid="tablaProveedor"></include>
+        where id_proveedor = #{idProveedor}
+    </select>
+
+    <update id="updateProveedor" parameterType="Map">
+        UPDATE public.co_proveedor SET
+       nombre=#{dto.nombre}, ruc=#{dto.ruc}, direccion=#{dto.direccion}, telefono=#{dto.telefono},
+       correo=#{dto.correo}, estado=#{dto.estado}, fecha_modificacion=now(), usuario_modificacion=#{user}
+		WHERE id_proveedor=#{dto.idProveedor}
+    </update>
 </mapper>
