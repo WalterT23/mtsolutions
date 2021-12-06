@@ -34,6 +34,8 @@ public class StkArticuloDTO {
 
 	private Integer idProveedor;
 
+	private String nombreProveedor;
+
 
 
 }
