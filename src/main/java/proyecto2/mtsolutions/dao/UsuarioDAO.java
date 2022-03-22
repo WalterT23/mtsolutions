@@ -29,6 +29,7 @@ public interface UsuarioDAO {
     List<FuncionalidadDTO> getFuncionalidadesList();
     int insertRolUser(UsuarioDTO user);
     int updateRolUSer(UsuarioDTO user);
+    int userByCheck(String user);
     //List<PerfilDetalleDTO> getPerfilesList();
 
 

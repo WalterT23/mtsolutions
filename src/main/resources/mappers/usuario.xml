@@ -37,6 +37,12 @@
         where su.cod = #{username}
     </select>
 
+    <select id="userByCheck" parameterType="String" resultType="Integer">
+        select count(su.*)
+        from seg_usuario su
+        where su.cod = #{user}
+    </select>
+
     <select id="userByNameView" parameterType="Map" resultType="UsuarioDTO">
         select su.cod id,
             su.nombre nombre,

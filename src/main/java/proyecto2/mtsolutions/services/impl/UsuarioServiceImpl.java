@@ -149,17 +149,13 @@ public class UsuarioServiceImpl implements UsuarioService {
                 throw new ServiceException(ErrorCode.PARAMETROS_FALTANTES);
             }
             if (ctrl.isNull(dto.getId())) {
-                String usr = ctrl.obtenerUsuario(dto.getNombre(), dto.getApellido());
-                if (ctrl.isNull(usr)) {
-                    log.error(ErrorCode.ERROR_GENERAR_USUARIO.toString());
-                    throw new ServiceException(ErrorCode.ERROR_GENERAR_USUARIO);
-                }
-                UsuarioDTO exi = usuarioDAO.userByName(usr);
-                if (!ctrl.isNull(exi)) {
-                    log.error(ErrorCode.USUARIO_EXISTENTE.toString());
-                    throw new ServiceException(ErrorCode.USUARIO_EXISTENTE);
-                }
-                dto.setId(usr);
+                log.error(ErrorCode.ERROR_GENERAR_USUARIO.toString());
+                throw new ServiceException(ErrorCode.ERROR_GENERAR_USUARIO);
+            }
+            UsuarioDTO exi = usuarioDAO.userByName(dto.getId());
+            if (ctrl.isNull(exi)) {
+                //String usr = ctrl.obtenerUsuario(dto.getNombre(), dto.getApellido());
+                //dto.setId(dto.getUsername());
                 BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(BCRYPT_COMPLEXITY);
                 String newPass = passwordEncoder.encode(dto.getPass()==null?"123":dto.getPass());
                 dto.setEstado("ACTIVO");
@@ -217,4 +213,34 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
     }
 
+    /**
+     * Verifica que el username proveido no exista en la base
+     * @param dto
+     * @param usuario
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public int checkUser(UsuarioDTO dto, String usuario) throws Exception {
+        try {
+            log.info(getClass().toString());
+            log.info("Usuario conectado: "+usuario);
+            log.info("Servicio: checkUser ");
+            if (ctrl.isNull(dto)) {
+                log.error(ErrorCode.NO_BODY_DATA.toString());
+                throw new ServiceException(ErrorCode.NO_BODY_DATA);
+            }
+            if (ctrl.isNull(dto.getUsername())) {
+                log.error(ErrorCode.PARAMETROS_FALTANTES.toString());
+                throw new ServiceException(ErrorCode.PARAMETROS_FALTANTES);
+            }
+            int exi = usuarioDAO.userByCheck(dto.getUsername());
+            return exi;
+        } catch (ServiceException e) {
+            throw new ServiceException(e.getErrorCode());
+        } catch (Exception e) {
+            log.error(e.toString());
+            throw new ServiceException(ErrorCode.INTERNAL_ERROR, e.toString());
+        }
+    }
 }

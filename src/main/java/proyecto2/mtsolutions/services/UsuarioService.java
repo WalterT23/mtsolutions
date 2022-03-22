@@ -12,4 +12,5 @@ public interface UsuarioService {
     String crearUsuario(UsuarioDTO dto, String usuario) throws Exception;
     ListasDTO listadoRoles(String usuario) throws Exception;
     UsuarioDTO obtenerUsuario(UsuarioDTO dto, String usuario) throws Exception;
+    int checkUser(UsuarioDTO dto, String usuario) throws Exception;
 }

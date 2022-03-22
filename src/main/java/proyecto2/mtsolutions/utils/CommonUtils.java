@@ -31,7 +31,7 @@ public class CommonUtils {
     private ParametroDAO parametroDAO;
 
 
-    public boolean isNull(Object data) {
+    public static boolean isNull(Object data) {
         if (data == null) {
             return true;
         } else if (data instanceof String) {
@@ -44,6 +44,10 @@ public class CommonUtils {
             return ((HashMap) data).isEmpty();
         }
         return false;
+    }
+
+    public static boolean notNull(Object data) {
+        return !isNull(data);
     }
 
     public File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException {

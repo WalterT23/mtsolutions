@@ -105,4 +105,16 @@ public class UsuarioController {
         resp.setMessage("OK");
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
+
+    @PostMapping(value="/check", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> checkUsuario(HttpServletRequest request,
+                                            @RequestBody UsuarioDTO dto) throws Exception {
+        String user = request.getHeader(JWTServiceImpl.USER_STRING);
+        log.info(request.getContextPath());
+        MtSolutionsResponse resp = new MtSolutionsResponse();
+        resp.setSuccess(true);
+        resp.setData(this.service.checkUser(dto, user));
+        resp.setMessage("OK");
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
 }

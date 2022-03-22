@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.ParametroDAO">
+    <select id="traerHelpers" resultType="HelperDTO">
+        select h.clave,
+            h.valor,
+            h.activo
+        from ba_helper h
+        where h.activo is true
+    </select>
+
+    <select id="traerEmpresas" resultType="BaseDTO" parameterType="FiltroDTO">
+         select be.id_par id,
+       be.nombre_empresa nombre,
+       be.direccion descripcion,
+       be.ruc clave,
+       be.razon_social valor
+       from ba_empresa be
+       where 1=1
+       <if test="valor2 != null">
+           <bind name="filx" value="'%' + valor2 + '%'" />
+           and lower(be.nombre_empresa) like lower(#{filx})
+           or lower(be.direccion) like lower(#{filx})
+           or lower(be.ruc) like lower(#{filx})
+           or lower(be.razon_social) like lower(#{filx})
+       </if>
+    </select>
+
+    <select id="traerSucursal" resultType="BaseDTO" parameterType="FiltroDTO">
+          select bs.cod_sucursal id,
+                bs.nombre,
+                bs.direccion descripcion,
+                bs.telefono clave,
+                bs.correo valor
+            from ba_sucursal bs
+        where 1=1
+        <if test="valor2 != null">
+            <bind name="filx" value="'%' + valor2 + '%'" />
+            and lower(bs.nombre) like lower(#{filx})
+            or lower(bs.direccion) like lower(#{filx})
+            or lower(bs.telefono) like lower(#{filx})
+            or lower(bs.correo) like lower(#{filx})
+        </if>
+    </select>
+
+    <select id="traerMonedas" resultType="BaseDTO" parameterType="FiltroDTO">
+        select bm.id_moneda id,
+            bm.codigo nombre,
+            bm.procedencia descripcion,
+            bm.cotizacion clave
+        from ba_moneda bm
+        where bm.activo is true
+        <if test="valor2 != null">
+            <bind name="filx" value="'%' + valor2 + '%'" />
+            and lower(bm.codigo) like lower(#{filx})
+            or lower(bm.procedencia) like lower(#{filx})
+            or cast(bm.cotizacion as varchar) like lower(#{filx})
+        </if>
+    </select>
+
+    <select id="traerImpuestos" resultType="BaseDTO" parameterType="FiltroDTO">
+        select
+            bi.id_impuesto id,
+            bi.descripcion,
+            bi.porcentaje clave
+        from ba_impuesto bi
+        where bi.activo is true
+        <if test="valor2 != null">
+            <bind name="filx" value="'%' + valor2 + '%'" />
+            and lower(bi.descripcion) like lower(#{filx})
+            or cast(bi.porcentaje as varchar) like lower(#{filx})
+        </if>
+    </select>
+
+    <select id="traerCategorias" resultType="BaseDTO" parameterType="FiltroDTO">
+           select sc.categoria id,
+            sc.descripcion
+            from stk_categoria sc
+            where 1=1
+        <if test="valor2 != null">
+            <bind name="filx" value="'%' + valor2 + '%'" />
+            and lower(sc.descripcion) like lower(#{filx})
+        </if>
+    </select>
+
+    <select id="traerFamilias" resultType="BaseDTO" parameterType="FiltroDTO">
+        select sf.id_familia id,
+            sf.descripcion
+        from stk_familia sf
+        where 1=1
+        <if test="valor2 != null">
+            <bind name="filx" value="'%' + valor2 + '%'" />
+            and lower(sf.descripcion) like lower(#{filx})
+        </if>
+    </select>
+
+    <select id="traerTipoGastos" resultType="BaseDTO" parameterType="FiltroDTO">
+         select ctg.id id,
+       ctg.descripcion
+       from co_tipo_gasto ctg
+       where ctg.estado is true
+        <if test="valor2 != null">
+            <bind name="filx" value="'%' + valor2 + '%'" />
+            and lower(ctg.descripcion) like lower(#{filx})
+        </if>
+    </select>
+
+</mapper>
