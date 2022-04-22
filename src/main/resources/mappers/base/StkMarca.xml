@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.StkMarcaDAO">
+
+    <sql id="sqlMarca">
+        select
+            id_marca idMarca ,
+            descripcion descripcion
+        from stk_marca
+    </sql>
+
+    <select id="getLista" resultType="StkMarcaDTO">
+        <include refid="sqlMarca"/>
+        limit #{cantidad} offset #{offset}
+    </select>
+
+    <select id="getListCount"  resultType="BigDecimal">
+        select
+            count(*)
+        from stk_marca
+    </select>
+
+    <select id="getById" parameterType="Integer" resultType="StkMarcaDTO">
+        <include refid="sqlMarca"/>
+        where id_marca = #{id}
+    </select>
+</mapper>

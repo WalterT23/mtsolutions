@@ -18,6 +18,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class VeClientesDTO {
 
+	private Integer idCliente;
+
 	private BigDecimal ruc;
 
 	private BigDecimal dv;

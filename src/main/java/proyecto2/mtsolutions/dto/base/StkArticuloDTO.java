@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import proyecto2.mtsolutions.dto.AtributosBasicos;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -18,24 +19,23 @@ public class StkArticuloDTO {
 
 	private Integer codArticulo;
 
-	private BigDecimal idListaPrecio;
+	private List<StkListaPrecioDTO> listaPrecio; //este no se que hace aca
 
 	private String descripcion;
 
-	private BigDecimal costoUnitario;
-
-	private String ubicacion;
+	/*private BigDecimal costoUnitario;
 
 	private BigDecimal ultimoCosto;
 
-	private BigDecimal precioVenta;
+	private BigDecimal precioVenta;*/
 
-	private String categoria;
+	private StkCategoriaDTO categoria;//entidad
 
-	private Integer idProveedor;
+	private StkMarcaDTO marca;
 
-	private String nombreProveedor;
+	private StkFamiliaDTO familia;
 
+	private BaImpuestoDTO impuesto;
 
-
+	private Boolean activo;
 }

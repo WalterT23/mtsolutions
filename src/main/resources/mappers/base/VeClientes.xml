@@ -5,28 +5,36 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="proyecto2.mtsolutions.dao.base.VeClientesDAO">
 
-    <select id="getVeClientesList" resultType="VeClientesDTO">
-        select 
-        ruc ruc ,
-        dv dv ,
-        direccion direccion ,
-        razon_social razonSocial ,
-        email email ,
-        es_juridico esJuridico ,
-        telefono telefono ,
-        usuario_creacion usuarioCreacion ,
-        usuario_modificaicon usuarioModificaicon ,
-        fecha_creacion fechaCreacion ,
-        fecha_modificacion fechaModificacion 
-        from ve_clientes 
+    <sql id="sqlCliente">
+        select
+            id_cliente idCliente,
+            ruc ruc ,
+            dv dv ,
+            direccion direccion ,
+            razon_social razonSocial ,
+            email email ,
+            es_juridico esJuridico ,
+            telefono telefono ,
+            usuario_creacion usuarioCreacion ,
+            usuario_modificaicon usuarioModificaicon ,
+            fecha_creacion fechaCreacion ,
+            fecha_modificacion fechaModificacion
+        from ve_clientes
+    </sql>
+
+    <select id="getLista" parameterType="Map" resultType="VeClientesDTO">
+        <include refid="sqlCliente"/>
         limit #{cantidad} offset #{offset}
     </select>
-    <select id="getVeClientesListCount"  resultType="BigDecimal">
-        select 
-        count(*) 
-        from ve_clientes;
+
+    <select id="getListCount"  resultType="BigDecimal">
+        select
+        count(*)
+        from ve_clientes
+        where estado = true
     </select>
-    <insert id="insertVeClientes" parameterType="VeClientesDTO">
+
+    <insert id="insert" parameterType="VeClientesDTO">
         INSERT INTO public.ve_clientes
         (
         ruc, 
@@ -35,11 +43,11 @@
         razon_social, 
         email, 
         es_juridico, 
-        telefono, 
-        usuario_creacion, 
-        usuario_modificaicon, 
-        fecha_creacion, 
-        fecha_modificacion) 
+        telefono,
+        usuario_creacion,
+        usuario_modificaicon,
+        fecha_creacion,
+        fecha_modificacion)
         VALUES 
         (
         #{ruc}, 
@@ -54,4 +62,45 @@
         #{fechaCreacion}, 
         #{fechaModificacion}); 
     </insert>
+
+    <update id="update" >
+        UPDATE public.ve_clientes
+        SET ruc = #{ruc},
+            dv #{dv},
+            direccion = #{direccion},
+            razon_social = #{razonSocial},
+            email = #{email},
+            es_juridico = #{esJuridico},
+            telefono = #{telefono},
+            usuario_modificaicon = #{usuarioModificaicon},
+            fecha_modificacion = #{fechaModificacion}
+        WHERE ruc = #{ruc}
+    </update>
+
+    <select id="getById" parameterType="Map" resultType="VeClientesDTO">
+        <include refid="sqlCliente"/>
+        where id_cliente = #{idCliente}
+    </select>
+
+    <select id="buscar" parameterType="Map" resultType="VeClientesDTO">
+        <bind name="fil" value="'%' + filtro.valor + '%'" />
+        <include refid="sqlCliente"></include>
+        where
+        lower(nombre) like lower(#{fil})
+        or lower(ruc) like lower(#{fil})
+        or lower(direccion) like lower(#{fil})
+        or lower(correo) like lower(#{fil})
+        or lower(usuario_creacion) like lower(#{fil})
+        order by fecha_creacion desc limit #{cantidad} offset #{offset}
+    </select>
+
+    <select id="yaExiste" parameterType="VeClientesDTO" resultType="java.lang.Boolean">
+        select case
+        when ruc is null then false
+        else true
+        end resultado
+        from (select ruc from ve_clientes vc where vc.ruc = UPPER(#{ruc}) ) t
+    </select>
+
+
 </mapper>

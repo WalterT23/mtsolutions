@@ -5,12 +5,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="proyecto2.mtsolutions.dao.base.StkListaPrecioDAO">
 
+    <sql id="sqlListaPrecio">
+        select
+            id_lista_precio idListaPrecio ,
+            porcentaje porcentaje ,
+            operacion operacion
+        from stk_lista_precio
+    </sql>
+
     <select id="getStkListaPrecioList" resultType="StkListaPrecioDTO">
-        select 
-        id_lista_precio idListaPrecio ,
-        porcentaje porcentaje ,
-        operacion operacion 
-        from stk_lista_precio 
+        <include refid="sqlListaPrecio"/>
         limit #{cantidad} offset #{offset}
     </select>
     <select id="getStkListaPrecioListCount"  resultType="BigDecimal">
@@ -30,4 +34,9 @@
         #{porcentaje}, 
         #{operacion}); 
     </insert>
+
+    <select id="getById" parameterType="Map" resultType="StkListaPrecioDTO">
+        <include refid="sqlListaPrecio"/>
+        where id_lista_precio = #{id}
+    </select>
 </mapper>

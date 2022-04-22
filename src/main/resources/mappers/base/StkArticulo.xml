@@ -5,55 +5,60 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="proyecto2.mtsolutions.dao.base.StkArticuloDAO">
 
+    <resultMap type="StkArticuloDTO" id="articuloMapFull">
+        <association property="categoria"	column="categoriaId"	select="proyecto2.mtsolutions.dao.base.StkCategoriaDAO.getById"/>
+        <association property="marca"	column="idMarca"	select="proyecto2.mtsolutions.dao.base.StkMarcaDAO.getById"/>
+        <association property="familia"	column="idFamilia"	select="proyecto2.mtsolutions.dao.base.StkFamiliaDAO.getById"/>
+        <association property="impuesto"	column="idImpuesto"	select="proyecto2.mtsolutions.dao.base.BaImpuestoDAO.getById"/>
+    </resultMap>
+
     <sql id="tablaArticulo">
         select
         sa.cod_articulo codArticulo ,
-        sa.id_lista_precio idListaPrecio ,
         sa.descripcion descripcion ,
         sa.costo_unitario costoUnitario ,
-        sa.ubicacion ubicacion ,
         sa.ultimo_costo ultimoCosto ,
         sa.precio_venta precioVenta ,
-        sa.categoria categoria ,
-        sa.id_proveedor idProveedor,
-        cp.nombre nombreProveedor
+        sa.categoria categoriaId ,
+        sa.id_marca idMarca,
+        sa.id_familia idFamilia,
+        sa.impuesto idImpuesto
         from stk_articulo sa
-        join public.co_proveedor cp on sa.id_proveedor = cp.id_proveedor
     </sql>
 
-    <select id="getStkArticuloList" resultType="StkArticuloDTO">
+    <select id="getStkArticuloList" resultMap="articuloMapFull" parameterType="Map" >
         <include refid="tablaArticulo"></include>
         limit #{cantidad} offset #{offset}
     </select>
+
     <select id="getStkArticuloListCount"  resultType="BigDecimal">
         select 
         count(sa.*)
         from stk_articulo sa
         join public.co_proveedor cp on sa.id_proveedor = cp.id_proveedor
     </select>
+
     <insert id="insertStkArticulo" parameterType="StkArticuloDTO">
         INSERT INTO public.stk_articulo
         (
-        cod_articulo, 
-        id_lista_precio, 
-        descripcion, 
-        costo_unitario, 
-        ubicacion, 
-        ultimo_costo, 
-        precio_venta, 
-        categoria, 
-        id_proveedor) 
+         cod_articulo,
+         descripcion,
+         categoria,
+         id_familia,
+         impuesto,
+         id_marca,
+         activo
+         )
         VALUES 
         (
-        #{codArticulo}, 
-        #{idListaPrecio}, 
-        #{descripcion}, 
-        #{costoUnitario}, 
-        #{ubicacion}, 
-        #{ultimoCosto}, 
-        #{precioVenta}, 
-        #{categoria}, 
-        #{idProveedor}); 
+        #{codArticulo},
+        #{descripcion},
+        #{categoria.categoria},
+        #{familia.idFamilia},
+        #{impuesto.idImpuesto},
+        #{marca.idMarca},
+        #{activo}
+        )
     </insert>
 
     <select id="buscarArticuloList" parameterType="Map" resultType="StkArticuloDTO">
@@ -63,10 +68,10 @@
         sa.cod_articulo::text like #{fil}
         or lower(sa.descripcion) like lower(#{fil})
         or lower(sa.ubicacion) like lower(#{fil})
-        or lower(sa.categoria) like lower (#{fil})
         or lower (cp.nombre) like lower (#{fil})
         order by sa.descripcion desc limit #{cantidad} offset #{offset}
     </select>
+
     <select id="buscarArticuloListCount"  parameterType="Map" resultType="BigDecimal">
         <bind name="fil" value="'%' + filtro.valor + '%'" />
         select count(sa.*)
@@ -76,7 +81,7 @@
         sa.cod_articulo::text like #{fil}
         or lower(sa.descripcion) like lower(#{fil})
         or lower(sa.ubicacion) like lower(#{fil})
-        or lower(sa.categoria) like lower (#{fil})
         or lower (cp.nombre) like lower (#{fil})
     </select>
+
 </mapper>

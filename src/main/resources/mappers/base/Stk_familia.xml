@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proyecto2.mtsolutions.dao.base.StkFamiliaDAO">
+
+    <sql id="sqlFamilia">
+        select
+            id_familia idFamilia ,
+            descripcion descripcion ,
+            estado activo
+        from stk_familia
+    </sql>
+
+    <select id="getLista" resultType="StkFamiliaDTO">
+        <include refid="sqlFamilia"/>
+        limit #{cantidad} offset #{offset}
+    </select>
+
+    <select id="getListCount"  resultType="BigDecimal">
+        select
+            count(*)
+        from stk_familia
+        where estado = true
+    </select>
+
+    <select id="getById" parameterType="Map" resultType="StkFamiliaDTO">
+        <include refid="sqlFamilia"/>
+        where id_familia = #{idFamilia}
+    </select>
+
+</mapper>

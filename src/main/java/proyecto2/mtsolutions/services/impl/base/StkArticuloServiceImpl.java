@@ -42,7 +42,14 @@ public class StkArticuloServiceImpl implements StkArticuloService {
     public String crearStkArticulo(StkArticuloDTO dto, String usuario) throws Exception {
         try {
             String re = "";
-            if (ctrl.isNull(dto.getIdProveedor())) {
+            dto.setActivo(true);
+
+            int xc = stkArticuloDAO.insertStkArticulo(dto);
+            if (xc == 0) {
+                re = "No se pudo insertar el registro";
+            }
+
+            /*if (ctrl.isNull(dto.getIdProveedor())) {
                 re = "Registro creado correctamente";
                 int xc = stkArticuloDAO.insertStkArticulo(dto);
                 if (xc == 0) {
@@ -54,7 +61,7 @@ public class StkArticuloServiceImpl implements StkArticuloService {
                 if (x == 0) {
                     re = "No actualizado";
                 }
-            }
+            }*/
             return re;
         } catch (ServiceException e) {
           throw new ServiceException(e.getErrorCode());
@@ -97,12 +104,12 @@ public class StkArticuloServiceImpl implements StkArticuloService {
                 log.error(ErrorCode.NO_BODY_DATA.toString());
                 throw new ServiceException(ErrorCode.NO_BODY_DATA);
             }
-            if (ctrl.isNull(dto.getIdProveedor())) {
+            /*if (ctrl.isNull(dto.getIdProveedor())) {
                 log.error(ErrorCode.PARAMETROS_FALTANTES.toString());
                 throw new ServiceException(ErrorCode.PARAMETROS_FALTANTES);
             }
-            CoProveedorDTO exi = stkArticuloDAO.getArticuloById(dto.getIdProveedor());
-            return exi;
+            CoProveedorDTO exi = stkArticuloDAO.getArticuloById(dto.getIdProveedor());*/
+            return null;
         } catch (ServiceException e) {
             throw new ServiceException(e.getErrorCode());
         } catch (Exception e) {

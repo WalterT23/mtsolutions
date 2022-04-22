@@ -72,11 +72,11 @@
         select count(*)
         from co_proveedor
         where
-        lower(nombre) like lower(#{fil})
-        or lower(ruc) like lower(#{fil})
-        or lower(direccion) like lower(#{fil})
-        or lower(correo) like lower(#{fil})
-        or lower(usuario_creacion) like lower(#{fil})
+        nombre like upper(#{fil})
+        or ruc like upper(#{fil})
+        or direccion like upper(#{fil})
+        or correo like upper(#{fil})
+        or usuario_creacion like upper(#{fil})
     </select>
 
     <select id="getCoProveedorById" parameterType="Map" resultType="CoProveedorDTO">
