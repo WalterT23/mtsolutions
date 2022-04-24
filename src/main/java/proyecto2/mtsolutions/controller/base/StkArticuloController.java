@@ -9,12 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import proyecto2.mtsolutions.dto.FiltroDTO;
 import proyecto2.mtsolutions.dto.MtSolutionsResponse;
-import proyecto2.mtsolutions.dto.base.CoProveedorDTO;
 import proyecto2.mtsolutions.dto.base.StkArticuloDTO;
 import proyecto2.mtsolutions.services.base.StkArticuloService;
 import proyecto2.mtsolutions.services.impl.JWTServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 
 @Slf4j
 @Controller
@@ -24,26 +25,38 @@ public class StkArticuloController {
     private StkArticuloService service;
 
     @GetMapping(value = "/lista", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> listaStkArticulo(HttpServletRequest request,
+    public ResponseEntity<?> lista(HttpServletRequest request,
                                            @RequestParam(value = "cantidad", defaultValue = "10") int cantidad,
                                            @RequestParam(value = "origen", defaultValue = "0") int origen) throws Exception {
         String user = request.getHeader(JWTServiceImpl.USER_STRING);
         log.info(request.getContextPath());
         MtSolutionsResponse resp = new MtSolutionsResponse();
         resp.setSuccess(true);
-        resp.setData(this.service.listadoStkArticulo(user, cantidad, origen));
+        resp.setData(this.service.listado(user, cantidad, origen));
         resp.setMessage("OK");
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
     @PostMapping(value="/crear", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> crearStkArticulo(HttpServletRequest request,
-                                          @RequestBody StkArticuloDTO dto) throws Exception {
+    public ResponseEntity<?> crear(HttpServletRequest request,
+                                              @Valid @RequestBody StkArticuloDTO dto) throws Exception {
         String user = request.getHeader(JWTServiceImpl.USER_STRING);
         log.info(request.getContextPath());
         MtSolutionsResponse resp = new MtSolutionsResponse();
         resp.setSuccess(true);
-        resp.setData(this.service.crearStkArticulo(dto, user));
+        resp.setData(this.service.crear(dto, user));
+        resp.setMessage("OK");
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
+
+    @PostMapping(value="/editar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> editar(HttpServletRequest request,
+                                              @RequestBody StkArticuloDTO dto) throws Exception {
+        String user = request.getHeader(JWTServiceImpl.USER_STRING);
+        log.info(request.getContextPath());
+        MtSolutionsResponse resp = new MtSolutionsResponse();
+        resp.setSuccess(true);
+        resp.setData(this.service.editar(dto, user));
         resp.setMessage("OK");
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
@@ -57,7 +70,7 @@ public class StkArticuloController {
         log.info(request.getContextPath());
         MtSolutionsResponse resp = new MtSolutionsResponse();
         resp.setSuccess(true);
-        resp.setData(this.service.buscarArticulo(filtro, user, cantidad, origen));
+        resp.setData(this.service.buscar(filtro, user, cantidad, origen));
         resp.setMessage("OK");
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }

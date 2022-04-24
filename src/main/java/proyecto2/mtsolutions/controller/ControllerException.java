@@ -1,14 +1,24 @@
 package proyecto2.mtsolutions.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import proyecto2.mtsolutions.dto.MtSolutionsResponse;
 import proyecto2.mtsolutions.exceptions.ServiceException;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 @Slf4j
@@ -76,6 +86,19 @@ public class ControllerException extends ResponseEntityExceptionHandler {
                 return new ResponseEntity<>(err, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers, HttpStatus status, WebRequest request) {
+        String errorMessage = ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
+        List<String> validationList = ex.getBindingResult().getFieldErrors().stream().map(fieldError->fieldError.getDefaultMessage()).collect(Collectors.toList());
+        //LOGGER.info("Validation error list : "+validationList);
+        MtSolutionsResponse err = new MtSolutionsResponse();
+        //ApiErrorVO apiErrorVO = new ApiErrorVO(errorMessage);
+        err.setMessage(validationList.toString());
+        //apiErrorVO.setErrorList(validationList);
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
     }
 
 }

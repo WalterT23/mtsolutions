@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import proyecto2.mtsolutions.dto.AtributosBasicos;
 
+import javax.validation.constraints.NotBlank;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @Data
@@ -14,6 +16,7 @@ import proyecto2.mtsolutions.dto.AtributosBasicos;
 @NoArgsConstructor
 public class StkCategoriaDTO {
 
+	@NotBlank(message = "La categoria es requerida")
 	private String categoria;
 
 	private String descripcion;

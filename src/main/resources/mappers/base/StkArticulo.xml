@@ -84,4 +84,9 @@
         or lower (cp.nombre) like lower (#{fil})
     </select>
 
+    <select id="getById" parameterType="Map" resultType="StkArticuloDTO">
+        <include refid="tablaArticulo"></include>
+        where sa.cod_articulo = #{cod}
+    </select>
+
 </mapper>

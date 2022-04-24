@@ -14,7 +14,6 @@ import proyecto2.mtsolutions.services.base.StkArticuloService;
 import proyecto2.mtsolutions.utils.CommonUtils;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 @Slf4j
 @Service
@@ -26,7 +25,7 @@ public class StkArticuloServiceImpl implements StkArticuloService {
     private StkArticuloDAO stkArticuloDAO;
 
     @Override
-    public ListasDTO listadoStkArticulo(String usuario, int cantidad, int origen) throws Exception {
+    public ListasDTO listado(String usuario, int cantidad, int origen) throws Exception {
         try {
             ListasDTO lista = new ListasDTO();
             lista.setLista(stkArticuloDAO.getStkArticuloList(cantidad, origen));
@@ -39,7 +38,7 @@ public class StkArticuloServiceImpl implements StkArticuloService {
     }
 
     @Override
-    public String crearStkArticulo(StkArticuloDTO dto, String usuario) throws Exception {
+    public String crear(StkArticuloDTO dto, String usuario) throws Exception {
         try {
             String re = "";
             dto.setActivo(true);
@@ -71,7 +70,14 @@ public class StkArticuloServiceImpl implements StkArticuloService {
     }
 
     @Override
-    public ListasDTO buscarArticulo(FiltroDTO filtro, String usuario, int cantidad, int origen) throws Exception {
+    public String editar(StkArticuloDTO param, String usuario) throws Exception {
+        StkArticuloDTO dto = stkArticuloDAO.getById(param.getCodArticulo());
+        //TODO
+        return null;
+    }
+
+    @Override
+    public ListasDTO buscar(FiltroDTO filtro, String usuario, int cantidad, int origen) throws Exception {
         try {
             log.info(getClass().toString());
             log.info("Articulo conectado: "+usuario);
